@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RegistrationFormComponent as RegistrationForm } from './user-registration-form/user-registration-form.component';
+import { RegistrationFormComponent as RegistrationForm } from './registration-form/registration-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 

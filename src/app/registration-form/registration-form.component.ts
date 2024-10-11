@@ -19,8 +19,8 @@ import { HttpErrorResponse } from '@angular/common/http';
         MatButtonModule,
         MatInputModule
     ],
-    templateUrl: './user-registration-form.component.html',
-    styleUrl: './user-registration-form.component.scss'
+    templateUrl: './registration-form.component.html',
+    styleUrl: './registration-form.component.scss'
 })
 export class RegistrationFormComponent implements OnInit {
 
