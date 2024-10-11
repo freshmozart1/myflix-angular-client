@@ -22,7 +22,13 @@
         "lib": [
             "ES2022",
             "dom"
-        ]
+        ],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "types": [
+            "angular-material"
+        ],
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
