@@ -22,7 +22,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     templateUrl: './user-registration-form.component.html',
     styleUrl: './user-registration-form.component.scss'
 })
-export class UserRegistrationFormComponent implements OnInit {
+export class RegistrationFormComponent implements OnInit {
 
     @Input({ required: true })
     private _snackBar = inject(MatSnackBar);
@@ -30,7 +30,7 @@ export class UserRegistrationFormComponent implements OnInit {
 
     constructor(
         public fetchApiData: FetchApiDataService,
-        public dialogRef: MatDialogRef<UserRegistrationFormComponent>
+        public dialogRef: MatDialogRef<RegistrationFormComponent>
     ) { }
 
     ngOnInit(): void {
