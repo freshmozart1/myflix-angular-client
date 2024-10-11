@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -9,15 +8,16 @@ import { environment } from '../environments/environment';
 })
 export class FetchApiDataService {
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient
+    ) { }
 
     public userRegistration(userDetails: any): Observable<any> {
-        console.log(userDetails);
-        return this.http.post(environment.apiUrl + 'users', userDetails).pipe(catchError(this.handleError));
+        return this.http.post(environment.apiUrl + 'users', userDetails);
     }
 
     public userLogin(username: string, password: string): Observable<any> {
-        return this.http.post(`${environment.apiUrl}/login?username=${username}&password=${password}`, {}).pipe(catchError(this.handleError));
+        return this.http.post(`${environment.apiUrl}/login?username=${username}&password=${password}`, {});
     }
 
     public deleteUser(): Observable<any> {
@@ -27,11 +27,11 @@ export class FetchApiDataService {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
-        }).pipe(catchError(this.handleError));
+        });
     }
 
     public getUser(username: string): Observable<any> {
-        return this.http.get(`${environment.apiUrl}users/${username}`).pipe(catchError(this.handleError));
+        return this.http.get(`${environment.apiUrl}users/${username}`);
     }
 
     public addFavourite(movieId: string): Observable<any> {
@@ -41,7 +41,7 @@ export class FetchApiDataService {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
-        }).pipe(catchError(this.handleError));
+        });
     }
 
     public deleteFavourite(movieId: string): Observable<any> {
@@ -51,7 +51,7 @@ export class FetchApiDataService {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
-        }).pipe(catchError(this.handleError));
+        });
     }
 
     public getFavourites(): Observable<any> {
@@ -61,7 +61,7 @@ export class FetchApiDataService {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
-        }).pipe(catchError(this.handleError));
+        });
     }
 
     public getMovies(limit?: number): Observable<any> {
@@ -70,11 +70,11 @@ export class FetchApiDataService {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
-        }).pipe(map(this.extractResponseData), catchError(this.handleError));
+        });
     }
 
     public getMovie(title: string): Observable<any> {
-        return this.http.get(`${environment.apiUrl}movies/${encodeURIComponent(title)}`).pipe(catchError(this.handleError));
+        return this.http.get(`${environment.apiUrl}movies/${encodeURIComponent(title)}`);
     }
 
     public postMovie(movie: { title: string, description: string, genre: object, director: object, image: string }): Observable<any> {
@@ -83,15 +83,15 @@ export class FetchApiDataService {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
-        }).pipe(catchError(this.handleError));
+        });
     }
 
     public getDirectors(limit?: number): Observable<any> {
-        return this.http.get(`${environment.apiUrl}directors/${limit ? `?limit=${limit}` : ''}`).pipe(map(this.extractResponseData), catchError(this.handleError));
+        return this.http.get(`${environment.apiUrl}directors/${limit ? `?limit=${limit}` : ''}`);
     }
 
     public getDirector(name: string): Observable<any> {
-        return this.http.get(`${environment.apiUrl}directors/${encodeURIComponent(name)}`).pipe(catchError(this.handleError));
+        return this.http.get(`${environment.apiUrl}directors/${encodeURIComponent(name)}`);
     }
 
     public postDirector(director: { name: string, biography: string, birthday: string, deathday?: string }): Observable<any> {
@@ -100,28 +100,14 @@ export class FetchApiDataService {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
-        }).pipe(catchError(this.handleError));
+        });
     }
 
     public getGenres(limit?: number): Observable<any> {
-        return this.http.get(`${environment.apiUrl}genres/${limit ? `?limit=${limit}` : ''}`).pipe(map(this.extractResponseData), catchError(this.handleError));
+        return this.http.get(`${environment.apiUrl}genres/${limit ? `?limit=${limit}` : ''}`);
     }
 
     public getGenre(name: string): Observable<any> {
-        return this.http.get(`${environment.apiUrl}genres/${encodeURIComponent(name)}`).pipe(catchError(this.handleError));
-    }
-
-    private extractResponseData(res: object): any {
-        const body = res;
-        return body || {};
-    }
-
-    private handleError(error: HttpErrorResponse) {
-        if (error.error instanceof ErrorEvent) {
-            console.error('Some error occurred:', error.error.message);
-        } else {
-            console.error(`Error Status code ${error.status}, ` + `Error body is: ${error.error}`);
-        }
-        return throwError(() => new Error('Something bad happened; please try again later.'));
+        return this.http.get(`${environment.apiUrl}genres/${encodeURIComponent(name)}`);
     }
 }
