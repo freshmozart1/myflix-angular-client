@@ -24,8 +24,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class RegistrationFormComponent implements OnInit {
 
-    @Input({ required: true })
     private _snackBar = inject(MatSnackBar);
+
+    @Input({ required: true })
     userData = { username: '', password: '', email: '', birthday: undefined };
 
     constructor(
