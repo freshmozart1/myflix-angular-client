@@ -17,7 +17,7 @@ export class FetchApiDataService {
     }
 
     public userLogin(userData: { username: string, password: string }): Observable<any> {
-        return this.http.post(`${environment.apiUrl}/login?username=${userData.username}&password=${userData.password}`, {});
+        return this.http.post(`${environment.apiUrl}login?username=${userData.username}&password=${userData.password}`, {});
     }
 
     public deleteUser(): Observable<any> {
