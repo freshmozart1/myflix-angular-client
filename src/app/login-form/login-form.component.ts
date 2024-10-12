@@ -1,4 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -31,18 +32,24 @@ export class LoginFormComponent {
 
     constructor(
         public fetchApiData: FetchApiDataService,
-        public dialogRef: MatDialogRef<LoginFormComponent>
+        public dialogRef: MatDialogRef<LoginFormComponent>,
+        public router: Router
     ) { }
 
     protected loginUser(): void {
         const loginSubscriber = this.fetchApiData.userLogin(this.userData).subscribe({
-            next: (result) => console.log(result),
+            next: (result) => {
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('username', result.user.username);
+                console.log(result);
+            },
             complete: () => {
                 this.dialogRef.close();
                 this._snackBar.open('Login successfull!', 'OK', {
                     duration: 2000
                 });
                 if (!loginSubscriber.closed) loginSubscriber.unsubscribe();
+                this.router.navigate(['movies']);
             },
             error: (error: HttpErrorResponse) => {
                 console.error(error);
