@@ -4,6 +4,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MovieThumbnailPipe } from '../movie-thumbnail.pipe';
+import { Movie } from '../movie.model';
 
 @Component({
     selector: 'app-movie-card',
@@ -19,15 +20,12 @@ import { MovieThumbnailPipe } from '../movie-thumbnail.pipe';
     styleUrl: './movie-card.component.scss'
 })
 export class MovieCardComponent implements OnInit {
-    movies: any[] = [];
+    movies: Movie[] = [];
     constructor(public fetchApiData: FetchApiDataService) {
     }
     ngOnInit(): void {
-        this.getMovies();
-    }
-    getMovies(): void {
         const subscriber = this.fetchApiData.getMovies().subscribe({
-            next: (movies: any) => {
+            next: (movies: Movie[]) => {
                 console.log(movies);
                 this.movies = movies;
                 subscriber.unsubscribe();
