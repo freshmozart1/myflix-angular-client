@@ -1,29 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RegistrationFormComponent as RegistrationForm } from './registration-form/registration-form.component';
-import { LoginFormComponent as LoginForm } from './login-form/login-form.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     imports: [
-        RouterOutlet,
-        MatButtonModule
+        RouterOutlet
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent {
-    title = 'myFlix-Angular-client';
-    constructor(public dialog: MatDialog) { }
-
-    openUserRegistrationDialog(): void {
-        this.dialog.open(RegistrationForm, { width: '280px' });
-    }
-
-    openUserLoginDialog(): void {
-        this.dialog.open(LoginForm, { width: '280px' });
-    }
-}
+export class AppComponent { }
