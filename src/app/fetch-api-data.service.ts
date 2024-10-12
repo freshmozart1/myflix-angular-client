@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
+import { Movie } from './movie.model';
 
 @Injectable({
     providedIn: 'root'
@@ -64,17 +65,17 @@ export class FetchApiDataService {
         });
     }
 
-    public getMovies(limit?: number): Observable<any> {
+    public getMovies(limit?: number): Observable<Movie[]> {
         const token = localStorage.getItem('token');
-        return this.http.get(`${environment.apiUrl}movies/${limit ? `?limit=${limit}` : ''}`, {
+        return this.http.get<Movie[]>(`${environment.apiUrl}movies/${limit ? `?limit=${limit}` : ''}`, {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
         });
     }
 
-    public getMovie(title: string): Observable<any> {
-        return this.http.get(`${environment.apiUrl}movies/${encodeURIComponent(title)}`);
+    public getMovie(title: string): Observable<Movie> {
+        return this.http.get<Movie>(`${environment.apiUrl}movies/${encodeURIComponent(title)}`);
     }
 
     public postMovie(movie: { title: string, description: string, genre: object, director: object, image: string }): Observable<any> {
