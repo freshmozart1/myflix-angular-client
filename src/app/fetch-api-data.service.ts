@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Movie } from './movie.model';
+import { Director } from './director.model';
+import { Genre } from './genre.model';
 
 @Injectable({
     providedIn: 'root'
@@ -87,12 +89,12 @@ export class FetchApiDataService {
         });
     }
 
-    public getDirectors(limit?: number): Observable<any> {
-        return this.http.get(`${environment.apiUrl}directors/${limit ? `?limit=${limit}` : ''}`);
+    public getDirectors(limit?: number): Observable<Director[]> {
+        return this.http.get<Director[]>(`${environment.apiUrl}directors/${limit ? `?limit=${limit}` : ''}`);
     }
 
-    public getDirector(name: string): Observable<any> {
-        return this.http.get(`${environment.apiUrl}directors/${encodeURIComponent(name)}`);
+    public getDirector(name: string): Observable<Director> {
+        return this.http.get<Director>(`${environment.apiUrl}directors/${encodeURIComponent(name)}`);
     }
 
     public postDirector(director: { name: string, biography: string, birthday: string, deathday?: string }): Observable<any> {
@@ -104,11 +106,11 @@ export class FetchApiDataService {
         });
     }
 
-    public getGenres(limit?: number): Observable<any> {
-        return this.http.get(`${environment.apiUrl}genres/${limit ? `?limit=${limit}` : ''}`);
+    public getGenres(limit?: number): Observable<Genre[]> {
+        return this.http.get<Genre[]>(`${environment.apiUrl}genres/${limit ? `?limit=${limit}` : ''}`);
     }
 
-    public getGenre(name: string): Observable<any> {
-        return this.http.get(`${environment.apiUrl}genres/${encodeURIComponent(name)}`);
+    public getGenre(name: string): Observable<Genre> {
+        return this.http.get<Genre>(`${environment.apiUrl}genres/${encodeURIComponent(name)}`);
     }
 }
