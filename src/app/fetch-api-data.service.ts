@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
-import { Movie } from './movie.model';
-import { Director } from './director.model';
-import { Genre } from './genre.model';
+import { Movie } from './model/movie.model';
+import { Director } from './model/director.model';
+import { Genre } from './model/genre.model';
 
 @Injectable({
     providedIn: 'root'

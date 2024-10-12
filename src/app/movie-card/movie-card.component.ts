@@ -4,7 +4,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MovieThumbnailPipe } from '../movie-thumbnail.pipe';
-import { Movie } from '../movie.model';
+import { Movie } from '../model/movie.model';
 
 @Component({
     selector: 'app-movie-card',
