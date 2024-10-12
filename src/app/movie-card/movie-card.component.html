@@ -1,8 +1,28 @@
-<mat-card *ngFor="let movie of movies; let i = index">
-    <mat-dialog-content>
-        <mat-card-title>{{movie.title}}</mat-card-title>
-        <mat-card-subtitle>
-            <img src="{{movie.thumbnailPath | movieThumbnail | async}}" />
-        </mat-card-subtitle>
-    </mat-dialog-content>
-</mat-card>
+<script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
+    <div class="col d-flex" *ngFor="let movie of movies; let i = index">
+        <mat-card class="flex-grow-1 align-items-center p-4">
+            <mat-card-header class="row row-cols-2">
+                <mat-card-title class="col">{{movie.title}}</mat-card-title>
+                <mat-card-subtitle class="col">{{movie.genre.name}}</mat-card-subtitle>
+            </mat-card-header>
+            <div class="row row-cols-1">
+                <div class="col">
+                    <img mat-card-image class="img-fixed-size" src="{{movie.thumbnailPath | movieThumbnail | async}}" />
+                </div>
+            </div>
+            <mat-card-actions class="row row-cols-auto">
+                <div class="col">
+                    <button mat-icon-button class="mdc-button">
+                        <mat-icon>favorite_border</mat-icon>
+                    </button>
+                </div>
+                <span class="col">Director:&nbsp;</span>
+                <div class="col">
+                    <button mat-button>{{movie.director.name}}</button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+@import "@material/ripple/mdc-ripple";
+
+img.img-fixed-size {
+    height: 180px;
+    width: 286px;
+    object-fit: cover; /* Ensures the image is not stretched or condensed */
+}
