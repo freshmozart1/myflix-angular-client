@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@aws-sdk/client-s3": "^3.670.0",
+    "@material/icon-button": "^14.0.0",
     "@types/node": "^22.7.5",
     "dotenv": "^16.4.5",
     "rxjs": "~7.8.0",
