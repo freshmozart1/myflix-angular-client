@@ -2,23 +2,22 @@
 <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
     <div class="col d-flex" *ngFor="let movie of movies; let i = index">
-        <mat-card class="flex-grow-1 align-items-center p-4">
-            <mat-card-header class="row row-cols-2">
+        <mat-card class="flex-grow-1 align-items-center justify-content-between">
+            <mat-card-header class="row row-cols-2 m-4 text-center">
                 <mat-card-title class="col">{{movie.title}}</mat-card-title>
                 <mat-card-subtitle class="col">{{movie.genre.name}}</mat-card-subtitle>
             </mat-card-header>
-            <div class="row row-cols-1">
-                <div class="col">
+            <div class="row row-cols-1 p-0">
+                <div class="col p-0">
                     <img mat-card-image class="img-fixed-size" src="{{movie.thumbnailPath | movieThumbnail | async}}" />
                 </div>
             </div>
-            <mat-card-actions class="row row-cols-auto">
+            <mat-card-actions class="row row-cols-auto p-0">
                 <div class="col">
                     <button mat-icon-button class="mdc-button">
                         <mat-icon>favorite_border</mat-icon>
                     </button>
                 </div>
-                <span class="col">Director:&nbsp;</span>
                 <div class="col">
                     <button mat-button>{{movie.director.name}}</button>
                 </div>
