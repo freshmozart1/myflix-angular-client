@@ -19,18 +19,19 @@ import { HttpErrorResponse } from '@angular/common/http';
         MatButtonModule,
         MatInputModule
     ],
-    templateUrl: './user-registration-form.component.html',
-    styleUrl: './user-registration-form.component.scss'
+    templateUrl: './registration-form.component.html',
+    styleUrl: './registration-form.component.scss'
 })
-export class UserRegistrationFormComponent implements OnInit {
+export class RegistrationFormComponent implements OnInit {
+
+    private _snackBar = inject(MatSnackBar);
 
     @Input({ required: true })
-    private _snackBar = inject(MatSnackBar);
     userData = { username: '', password: '', email: '', birthday: undefined };
 
     constructor(
         public fetchApiData: FetchApiDataService,
-        public dialogRef: MatDialogRef<UserRegistrationFormComponent>
+        public dialogRef: MatDialogRef<RegistrationFormComponent>
     ) { }
 
     ngOnInit(): void {

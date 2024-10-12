@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UserRegistrationFormComponent as RegistrationForm } from './user-registration-form/user-registration-form.component';
+import { RegistrationFormComponent as RegistrationForm } from './registration-form/registration-form.component';
+import { LoginFormComponent as LoginForm } from './login-form/login-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -20,5 +21,9 @@ export class AppComponent {
 
     openUserRegistrationDialog(): void {
         this.dialog.open(RegistrationForm, { width: '280px' });
+    }
+
+    openUserLoginDialog(): void {
+        this.dialog.open(LoginForm, { width: '280px' });
     }
 }
