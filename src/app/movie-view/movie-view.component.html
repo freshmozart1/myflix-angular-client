@@ -1,0 +1,15 @@
+<script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<h2 mat-dialog-title>{{movie.title}}</h2>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-12">
+            <p>{{movie.description}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <img class="img-fluid" src="{{movie.imagePath|awsImages:'poster'|async}}" />
+        </div>
+    </div>
+</mat-dialog-content>
