@@ -1,19 +1,18 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Movie } from '../model/movie.model';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { AsyncPipe } from '@angular/common';
 import { AwsImagesPipe } from '../aws-images.pipe';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-movie-view',
     standalone: true,
     imports: [
-        MatDialogTitle,
-        MatDialogContent,
-        MatDialogActions,
-        MatDialogClose,
+        MatDialogModule,
         AsyncPipe,
-        AwsImagesPipe
+        AwsImagesPipe,
+        MatButtonModule
     ],
     templateUrl: './movie-view.component.html',
     styleUrl: './movie-view.component.scss'
