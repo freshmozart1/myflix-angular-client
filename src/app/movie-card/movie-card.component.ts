@@ -35,7 +35,10 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
 
     protected openMovieDetailsDialog(movie: Movie): void {
         console.log(movie);
-        this.dialog.open(MovieViewComponent, { data: { movie } });
+        this.dialog.open(MovieViewComponent, {
+            data: { movie },
+            autoFocus: '#closeButton'
+        });
     }
 
     ngOnInit(): void {
