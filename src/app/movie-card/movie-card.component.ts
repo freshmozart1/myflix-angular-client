@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
-import { NgForOf, AsyncPipe } from '@angular/common';
+import { NgForOf, AsyncPipe, NgIf } from '@angular/common';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -19,25 +19,41 @@ import { MatIconModule } from '@angular/material/icon';
         MovieThumbnailPipe,
         AsyncPipe,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        NgIf
     ],
     templateUrl: './movie-card.component.html',
     styleUrl: './movie-card.component.scss'
 })
 export class MovieCardComponent implements OnInit, AfterViewInit {
     movies: Movie[] = [];
-    constructor(public fetchApiData: FetchApiDataService, private el: ElementRef) {
+    favouriteIds: string[] = [];
+    constructor(
+        public fetchApiData: FetchApiDataService,
+        private el: ElementRef
+    ) {
     }
     ngOnInit(): void {
-        const subscriber = this.fetchApiData.getMovies().subscribe({
+        const movieSubscriber = this.fetchApiData.movies.subscribe({
             next: (movies: Movie[]) => {
                 console.log(movies);
                 this.movies = movies;
-                subscriber.unsubscribe();
+                movieSubscriber.unsubscribe();
             },
             error: (error: any) => {
                 console.error(error);
-                subscriber.unsubscribe
+                movieSubscriber.unsubscribe
+            }
+        });
+        const favouriteSubscriber = this.fetchApiData.favourites.subscribe({
+            next: ({ favourites }) => {
+                console.log(favourites);
+                this.favouriteIds = favourites;
+                favouriteSubscriber.unsubscribe();
+            },
+            error: (error: any) => {
+                console.error(error);
+                favouriteSubscriber.unsubscribe();
             }
         });
     }

@@ -15,7 +15,7 @@
             <mat-card-actions class="row row-cols-auto p-0">
                 <div class="col">
                     <button mat-icon-button class="mdc-button">
-                        <mat-icon>favorite_border</mat-icon>
+                        <mat-icon>{{favouriteIds.includes(movie._id) ? 'favorite' : 'favorite_border'}}</mat-icon>
                     </button>
                 </div>
                 <div class="col">
