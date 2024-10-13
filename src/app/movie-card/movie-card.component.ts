@@ -1,26 +1,25 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
-import { NgForOf, AsyncPipe, NgIf } from '@angular/common';
+import { NgForOf, AsyncPipe } from '@angular/common';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MovieThumbnailPipe } from '../movie-thumbnail.pipe';
 import { Movie } from '../model/movie.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MDCRipple } from '@material/ripple';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { MovieViewComponent } from '../movie-view/movie-view.component';
+import { AwsImagesPipe } from '../aws-images.pipe';
 
 @Component({
     selector: 'app-movie-card',
     standalone: true,
     imports: [
         MatCardModule,
-        MatDialogModule,
         NgForOf,
-        MovieThumbnailPipe,
         AsyncPipe,
         MatButtonModule,
         MatIconModule,
-        NgIf
+        AwsImagesPipe
     ],
     templateUrl: './movie-card.component.html',
     styleUrl: './movie-card.component.scss'
@@ -29,10 +28,16 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
     movies: Movie[] = [];
     favouriteIds: string[] = [];
     constructor(
-        public fetchApiData: FetchApiDataService,
-        private el: ElementRef
-    ) {
+        protected fetchApiData: FetchApiDataService,
+        private el: ElementRef,
+        protected dialog: MatDialog
+    ) { }
+
+    protected openMovieDetailsDialog(movie: Movie): void {
+        console.log(movie);
+        this.dialog.open(MovieViewComponent, { data: { movie } });
     }
+
     ngOnInit(): void {
         const movieSubscriber = this.fetchApiData.movies.subscribe({
             next: (movies: Movie[]) => {
@@ -57,6 +62,7 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
             }
         });
     }
+
     ngAfterViewInit(): void {
         for (let button of this.el.nativeElement.querySelectorAll('button')) {
             new MDCRipple(button);
