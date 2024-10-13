@@ -57,19 +57,19 @@ export class FetchApiDataService {
         });
     }
 
-    public getFavourites(): Observable<any> {
+    public get favourites(): Observable<{ _id: string, favourites: string[] }> {
         const token = localStorage.getItem('token');
         const username = localStorage.getItem('username');
-        return this.http.get(`${environment.apiUrl}users/${username}/movies`, {
+        return this.http.get<{ _id: string, favourites: string[] }>(`${environment.apiUrl}users/${username}/favourites`, {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
         });
     }
 
-    public getMovies(limit?: number): Observable<Movie[]> {
+    public get movies(): Observable<Movie[]> {
         const token = localStorage.getItem('token');
-        return this.http.get<Movie[]>(`${environment.apiUrl}movies/${limit ? `?limit=${limit}` : ''}`, {
+        return this.http.get<Movie[]>(`${environment.apiUrl}movies`, {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
