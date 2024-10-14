@@ -14,7 +14,8 @@
             </div>
             <mat-card-actions class="row row-cols-auto p-0">
                 <div class="col">
-                    <button mat-icon-button class="mdc-button">
+                    <button mat-icon-button class="mdc-button"
+                        (click)="toggleFavourite(movie._id); $event.stopPropagation()">
                         <mat-icon>{{favouriteIds.includes(movie._id) ? 'favorite' : 'favorite_border'}}</mat-icon>
                     </button>
                 </div>

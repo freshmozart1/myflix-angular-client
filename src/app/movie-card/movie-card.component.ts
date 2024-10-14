@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { MovieViewComponent } from '../movie-view/movie-view.component';
 import { AwsImagesPipe } from '../aws-images.pipe';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-movie-card',
@@ -41,6 +42,35 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
         });
     }
 
+    protected toggleFavourite(movieId: string): void {
+        ((favouriteObserver: Observable<any>) => {
+            favouriteObserver.subscribe({
+                next: (response: any) => {
+                    console.log(response);
+                    this.getFavourites();
+                },
+                error: (error: any) => {
+                    console.error(error);
+                    this.getFavourites();
+                }
+            });
+        })(this.favouriteIds.includes(movieId) ? this.fetchApiData.deleteFavourite(movieId) : this.fetchApiData.addFavourite(movieId));
+    }
+
+    private getFavourites(): void {
+        const favouriteSubscriber = this.fetchApiData.favourites.subscribe({
+            next: ({ favourites }) => {
+                console.log(favourites);
+                this.favouriteIds = favourites ? favourites : [];
+                favouriteSubscriber.unsubscribe();
+            },
+            error: (error: any) => {
+                console.error(error);
+                favouriteSubscriber.unsubscribe();
+            }
+        });
+    }
+
     ngOnInit(): void {
         const movieSubscriber = this.fetchApiData.movies.subscribe({
             next: (movies: Movie[]) => {
@@ -53,17 +83,7 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
                 movieSubscriber.unsubscribe
             }
         });
-        const favouriteSubscriber = this.fetchApiData.favourites.subscribe({
-            next: ({ favourites }) => {
-                console.log(favourites);
-                this.favouriteIds = favourites;
-                favouriteSubscriber.unsubscribe();
-            },
-            error: (error: any) => {
-                console.error(error);
-                favouriteSubscriber.unsubscribe();
-            }
-        });
+        this.getFavourites();
     }
 
     ngAfterViewInit(): void {
