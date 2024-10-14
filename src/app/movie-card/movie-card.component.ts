@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MovieViewComponent } from '../movie-view/movie-view.component';
 import { AwsImagesPipe } from '../aws-images.pipe';
 import { Observable } from 'rxjs';
+import { DirectorViewComponent } from '../director-view/director-view.component';
+import { Director } from '../model/director.model';
 
 @Component({
     selector: 'app-movie-card',
@@ -34,8 +36,14 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
         protected dialog: MatDialog
     ) { }
 
+    protected openDirectorDetailsDialog(director: Director): void {
+        this.dialog.open(DirectorViewComponent, {
+            data: { director },
+            autoFocus: '#closeButton'
+        });
+    }
+
     protected openMovieDetailsDialog(movie: Movie): void {
-        console.log(movie);
         this.dialog.open(MovieViewComponent, {
             data: { movie },
             autoFocus: '#closeButton'

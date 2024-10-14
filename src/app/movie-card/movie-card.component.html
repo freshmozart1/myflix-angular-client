@@ -20,7 +20,8 @@
                     </button>
                 </div>
                 <div class="col">
-                    <button mat-button>{{movie.director.name}}</button>
+                    <button mat-button
+                        (click)="openDirectorDetailsDialog(movie.director); $event.stopPropagation()">{{movie.director.name}}</button>
                 </div>
             </mat-card-actions>
         </mat-card>

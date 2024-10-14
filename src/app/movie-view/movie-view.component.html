@@ -12,11 +12,13 @@
     </div>
     <div class="row row-cols-auto pt-4 px-4 pb-2 d-flex align-items-center">
         <div class="col">Director:</div>
-        <div class="col"><button mat-button>{{movie.director.name}}</button></div>
+        <div class="col"><button mat-button
+                (click)="openDirectorDetailsDialog(); $event.stopPropagation()">{{movie.director.name}}</button></div>
     </div>
     <div class="row row-cols-auto pt-2 px-4 pb-4 d-flex align-items-center">
         <div class="col">Genre:</div>
-        <div class="col"><button mat-button>{{movie.genre.name}}</button></div>
+        <div class="col"><button mat-button
+                (click)="openGenreDetailsDialog(); $event.stopPropagation()">{{movie.genre.name}}</button></div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

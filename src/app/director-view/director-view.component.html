@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{director.name}}</h2>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-12">
+            <p>{{director.biography}}</p>
+        </div>
+    </div>
+    <div class="row row-cols-auto d-flex align-items-center"
+        [ngClass]="{'pt-4 px-4 pb-2': director.deathday !== null, 'p-4': director.deathday === null}">
+        <div class="col">Birthday:</div>
+        <div class="col">{{director.birthday | date:'shortDate'}}</div>
+    </div>
+    <div *ngIf="director.deathday !== null" class="row row-cols-auto pt-2 px-4 pb-4 d-flex align-items-center">
+        <div class="col">Deathday:</div>
+        <div class="col">{{director.deathday | date:'shortDate'}}</div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close id="closeButton">Close</button>
+</mat-dialog-actions>
