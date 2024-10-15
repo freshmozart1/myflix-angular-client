@@ -2,18 +2,18 @@
     <div class="col d-flex" *ngFor="let movie of movies; let i = index">
         <mat-card class="flex-grow-1 align-items-center justify-content-between"
             (click)="openMovieDetailsDialog(movie)">
-            <mat-card-header class="row row-cols-2 m-4 text-center">
-                <mat-card-title class="col">{{movie.title}}</mat-card-title>
-                <mat-card-subtitle class="col">{{movie.genre.name}}</mat-card-subtitle>
+            <mat-card-header class="row text-center">
+                <mat-card-title class="col-12">{{movie.title}}</mat-card-title>
+                <mat-card-subtitle class="col-12">{{movie.genre.name}}</mat-card-subtitle>
             </mat-card-header>
-            <div class="row row-cols-1 p-0">
-                <div class="col p-0">
+            <div class="row p-0">
+                <div class="col-12 p-0">
                     <img mat-card-image class="img-fixed-size"
                         src="{{movie.thumbnailPath | awsImages:'thumbnail' | async}}" />
                 </div>
             </div>
             <mat-card-actions class="row row-cols-auto p-0">
-                <div class="col">
+                <div class="col" *ngIf="user">
                     <button mat-icon-button class="mdc-button"
                         (click)="toggleFavourite(movie._id); $event.stopPropagation()">
                         <mat-icon>{{favouriteIds.includes(movie._id) ? 'favorite' : 'favorite_border'}}</mat-icon>

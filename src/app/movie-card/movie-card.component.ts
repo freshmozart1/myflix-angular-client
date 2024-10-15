@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
-import { NgForOf, AsyncPipe } from '@angular/common';
+import { NgForOf, AsyncPipe, NgIf } from '@angular/common';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatCardModule } from '@angular/material/card';
 import { Movie } from '../model/movie.model';
@@ -12,6 +12,7 @@ import { AwsImagesPipe } from '../aws-images.pipe';
 import { Observable } from 'rxjs';
 import { DirectorViewComponent } from '../director-view/director-view.component';
 import { Director } from '../model/director.model';
+import { UserService } from '../user.service';
 
 @Component({
     selector: 'app-movie-card',
@@ -22,19 +23,24 @@ import { Director } from '../model/director.model';
         AsyncPipe,
         MatButtonModule,
         MatIconModule,
-        AwsImagesPipe
+        AwsImagesPipe,
+        NgIf
     ],
     templateUrl: './movie-card.component.html',
     styleUrl: './movie-card.component.scss'
 })
 export class MovieCardComponent implements OnInit, AfterViewInit {
-    movies: Movie[] = [];
-    favouriteIds: string[] = [];
+    protected movies: Movie[] = [];
+    protected favouriteIds: string[] = [];
+    protected user: UserService['user'] | null = null;
     constructor(
         protected fetchApiData: FetchApiDataService,
         private el: ElementRef,
-        protected dialog: MatDialog
-    ) { }
+        protected dialog: MatDialog,
+        protected userService: UserService
+    ) {
+        this.user = this.userService.user;
+    }
 
     protected openDirectorDetailsDialog(director: Director): void {
         this.dialog.open(DirectorViewComponent, {
