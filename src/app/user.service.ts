@@ -14,7 +14,7 @@ export class UserService {
 
   constructor(private fetchApiData: FetchApiDataService) { }
 
-  set user(login: { username: string, password: string, dialog: MatDialogRef<LoginFormComponent | RegistrationFormComponent>, router: Router, snackBar?: MatSnackBar | undefined } | null) {
+  public set user(login: { username: string, password: string, dialog: MatDialogRef<LoginFormComponent | RegistrationFormComponent>, router: Router, snackBar?: MatSnackBar | undefined } | null) {
     if (login) {
       const loginSubscriber = this.fetchApiData.userLogin({ username: login.username, password: login.password }).subscribe({
         next: (result) => {
@@ -49,7 +49,7 @@ export class UserService {
     }
   }
 
-  get user(): { username: string | null, token: string | null } | null {
+  public get user(): { username: string | null, token: string | null } | null {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
     return username && token ? { username, token } : null;
