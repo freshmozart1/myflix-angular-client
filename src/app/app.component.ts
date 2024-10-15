@@ -20,4 +20,8 @@ export class AppComponent {
     ) {
         this.user = this.userService.user;
     }
+    protected logout() {
+        this.userService.user = null;
+        this.user = null;
+    }
 }
