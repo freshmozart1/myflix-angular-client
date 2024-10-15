@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-registration-form',
@@ -30,30 +30,15 @@ export class RegistrationFormComponent implements OnInit {
     userData = { username: '', password: '', email: '', birthday: undefined };
 
     constructor(
-        public fetchApiData: FetchApiDataService,
-        public dialogRef: MatDialogRef<RegistrationFormComponent>
+        public dialogRef: MatDialogRef<RegistrationFormComponent>,
+        private userService: UserService,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
     }
 
     protected registerUser(): void {
-        const { unsubscribe } = this.fetchApiData.userRegistration(this.userData).subscribe({
-            next: (result) => console.log(result),
-            complete: () => {
-                this.dialogRef.close();
-                this._snackBar.open('User registered successfully!', 'OK', {
-                    duration: 2000
-                });
-                unsubscribe();
-            },
-            error: (error: HttpErrorResponse) => {
-                console.error(error);
-                this._snackBar.open(error.error, 'OK', {
-                    duration: 2000
-                });
-                unsubscribe();
-            }
-        });
+        this.userService.registrateUser(this.userData, this.dialogRef, this.router, this._snackBar);
     }
 }
