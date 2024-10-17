@@ -57,15 +57,16 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
     }
 
     protected toggleFavourite(movieId: string): void {
-        ((favouriteObserver: Observable<any>) => {
+        ((favouriteObserver: Observable<Movie[] | null>) => {
             favouriteObserver.subscribe({
-                next: (response: any) => {
-                    console.log(response);
-                    this.getFavourites();
+                next: (response) => {
+                    if (response) {
+                        this.favouriteIds = [];
+                        for (const { _id } of response) this.favouriteIds.push(_id);
+                    }
                 },
                 error: (error: any) => {
                     console.error(error);
-                    this.getFavourites();
                 }
             });
         })(this.favouriteIds.includes(movieId) ? this.fetchApiData.deleteFavourite(movieId) : this.fetchApiData.addFavourite(movieId));
@@ -74,8 +75,9 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
     private getFavourites(): void {
         const favouriteSubscriber = this.fetchApiData.favourites.subscribe({
             next: ({ favourites }) => {
-                console.log(favourites);
-                this.favouriteIds = favourites ? favourites : [];
+                if (favourites) {
+                    for (let { _id } of favourites) this.favouriteIds.push(_id);
+                }
                 favouriteSubscriber.unsubscribe();
             },
             error: (error: any) => {
