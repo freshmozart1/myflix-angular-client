@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Movie } from './model/movie.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -100,20 +101,7 @@ export class UserService {
     });
   }
 
-  public get favourites(): Promise<Movie[]> {
-    return new Promise((resolve, reject) => {
-      const favouritesSubscriber = this.fetchApiData.favourites.subscribe({
-        next: (result) => {
-          console.log('Favourites retrieved successfully', result);
-          resolve(result.favourites);
-          favouritesSubscriber.unsubscribe();
-        },
-        error: (error: HttpErrorResponse) => {
-          console.error('Error retrieving favourites', error);
-          reject(error);
-          favouritesSubscriber.unsubscribe();
-        }
-      });
-    });
+  public get favourites(): Observable<Movie[] | null> {
+    return this.fetchApiData.favourites;
   }
 }
