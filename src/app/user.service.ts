@@ -6,6 +6,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { Router } from '@angular/router';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Movie } from './model/movie.model';
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +84,36 @@ export class UserService {
         });
         registrationSubscriber.unsubscribe();
       }
+    });
+  }
+
+  public patch(user: { username?: string, password?: string, email?: string, birthday?: string, favourites: string[] }): void {
+    const patchSubscriber = this.fetchApiData.patchUser(user).subscribe({
+      next: (result) => {
+        console.log('User updated successfully', result);
+        patchSubscriber.unsubscribe();
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Error updating user', error);
+        patchSubscriber.unsubscribe();
+      }
+    });
+  }
+
+  public get favourites(): Promise<Movie[]> {
+    return new Promise((resolve, reject) => {
+      const favouritesSubscriber = this.fetchApiData.favourites.subscribe({
+        next: (result) => {
+          console.log('Favourites retrieved successfully', result);
+          resolve(result.favourites);
+          favouritesSubscriber.unsubscribe();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Error retrieving favourites', error);
+          reject(error);
+          favouritesSubscriber.unsubscribe();
+        }
+      });
     });
   }
 }
