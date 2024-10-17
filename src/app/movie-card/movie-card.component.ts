@@ -72,21 +72,6 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
         })(this.favouriteIds.includes(movieId) ? this.fetchApiData.deleteFavourite(movieId) : this.fetchApiData.addFavourite(movieId));
     }
 
-    private getFavourites(): void {
-        const favouriteSubscriber = this.fetchApiData.favourites.subscribe({
-            next: ({ favourites }) => {
-                if (favourites) {
-                    for (let { _id } of favourites) this.favouriteIds.push(_id);
-                }
-                favouriteSubscriber.unsubscribe();
-            },
-            error: (error: any) => {
-                console.error(error);
-                favouriteSubscriber.unsubscribe();
-            }
-        });
-    }
-
     ngOnInit(): void {
         const movieSubscriber = this.fetchApiData.movies.subscribe({
             next: (movies: Movie[]) => {
@@ -99,7 +84,18 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
                 movieSubscriber.unsubscribe
             }
         });
-        this.getFavourites();
+        const favouritesSubscriber = this.userService.favourites.subscribe({
+            next: (favourites: Movie[] | null) => {
+                this.favouriteIds = [];
+                if (!favourites) return
+                for (const { _id } of favourites) this.favouriteIds.push(_id);
+                favouritesSubscriber.unsubscribe();
+            },
+            error: (error: any) => {
+                console.error(error);
+                favouritesSubscriber.unsubscribe();
+            }
+        });
     }
 
     ngAfterViewInit(): void {
