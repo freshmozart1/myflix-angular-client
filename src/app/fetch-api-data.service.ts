@@ -33,34 +33,44 @@ export class FetchApiDataService {
         });
     }
 
+    public patchUser(userData: { username?: string, password?: string, email?: string, birthday?: string, favourites: string[] }): Observable<any> {
+        const token = localStorage.getItem('token');
+        const username = localStorage.getItem('username');
+        return this.http.patch(`${environment.apiUrl}users/${username}`, userData, {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + token
+            })
+        });
+    }
+
     public getUser(username: string): Observable<any> {
         return this.http.get(`${environment.apiUrl}users/${username}`);
     }
 
-    public addFavourite(movieId: string): Observable<any> {
+    public addFavourite(movieId: string): Observable<Movie[]> {
         const token = localStorage.getItem('token');
         const username = localStorage.getItem('username');
-        return this.http.post(`${environment.apiUrl}users/${username}/favourites/${movieId}`, {}, {
+        return this.http.post<Movie[]>(`${environment.apiUrl}users/${username}/favourites/${movieId}`, {}, {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
         });
     }
 
-    public deleteFavourite(movieId: string): Observable<any> {
+    public deleteFavourite(movieId: string): Observable<Movie[] | null> {
         const token = localStorage.getItem('token');
         const username = localStorage.getItem('username');
-        return this.http.delete(`${environment.apiUrl}users/${username}/favourites/${movieId}`, {
+        return this.http.delete<Movie[] | null>(`${environment.apiUrl}users/${username}/favourites/${movieId}`, {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
         });
     }
 
-    public get favourites(): Observable<{ _id: string, favourites: string[] }> {
+    public get favourites(): Observable<{ _id: string, favourites: Movie[] }> {
         const token = localStorage.getItem('token');
         const username = localStorage.getItem('username');
-        return this.http.get<{ _id: string, favourites: string[] }>(`${environment.apiUrl}users/${username}/favourites`, {
+        return this.http.get<{ _id: string, favourites: Movie[] }>(`${environment.apiUrl}users/${username}/favourites`, {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
