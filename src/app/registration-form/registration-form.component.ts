@@ -39,6 +39,6 @@ export class RegistrationFormComponent implements OnInit {
     }
 
     protected registerUser(): void {
-        this.userService.registrateUser(this.userData, this.dialogRef, this.router, this._snackBar);
+        this.userService.registrate(this.userData, this.dialogRef, this.router, this._snackBar);
     }
 }

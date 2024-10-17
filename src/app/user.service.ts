@@ -55,7 +55,7 @@ export class UserService {
     return username && token ? { username, token } : null;
   }
 
-  public registrateUser(
+  public registrate(
     user: {
       username: string,
       password: string,
