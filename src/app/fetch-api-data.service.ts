@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Movie } from './model/movie.model';
 import { Director } from './model/director.model';
@@ -67,14 +67,14 @@ export class FetchApiDataService {
         });
     }
 
-    public get favourites(): Observable<{ _id: string, favourites: Movie[] }> {
+    public get favourites(): Observable<Movie[] | null> {
         const token = localStorage.getItem('token');
         const username = localStorage.getItem('username');
         return this.http.get<{ _id: string, favourites: Movie[] }>(`${environment.apiUrl}users/${username}/favourites`, {
             headers: new HttpHeaders({
                 Authorization: 'Bearer ' + token
             })
-        });
+        }).pipe(map((favourites: { _id: string, favourites: Movie[] | null }) => favourites.favourites));
     }
 
     public get movies(): Observable<Movie[]> {
