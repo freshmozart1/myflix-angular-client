@@ -104,4 +104,12 @@ export class UserService {
   public get favourites(): Observable<Movie[] | null> {
     return this.fetchApiData.favourites;
   }
+
+  public deleteFavourite(movieId: string): Observable<Movie[] | null> {
+    return this.fetchApiData.deleteFavourite(movieId);
+  }
+
+  public addFavourite(movieId: string): Observable<Movie[] | null> {
+    return this.fetchApiData.addFavourite(movieId);
+  }
 }

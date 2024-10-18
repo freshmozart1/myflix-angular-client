@@ -69,13 +69,12 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
                     console.error(error);
                 }
             });
-        })(this.favouriteIds.includes(movieId) ? this.fetchApiData.deleteFavourite(movieId) : this.fetchApiData.addFavourite(movieId));
+        })(this.favouriteIds.includes(movieId) ? this.userService.deleteFavourite(movieId) : this.userService.addFavourite(movieId));
     }
 
     ngOnInit(): void {
         const movieSubscriber = this.fetchApiData.movies.subscribe({
             next: (movies: Movie[]) => {
-                console.log(movies);
                 this.movies = movies;
                 movieSubscriber.unsubscribe();
             },
