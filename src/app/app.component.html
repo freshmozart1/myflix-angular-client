@@ -10,13 +10,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/movies">Movies</a>
                 </li>
-                <li class="nav-item" *ngIf="userService.user">
+                <li class="nav-item" *ngIf="userService.user.username">
                     <a href="/profile" class="nav-link">{{userService.user.username}}</a>
                 </li>
-                <li class="nav-item" *ngIf="userService.user">
+                <li class="nav-item" *ngIf="userService.user.username">
                     <a (click)="logout()" class="nav-link" style="cursor: pointer;">Logout</a>
                 </li>
-                <li class="nav-item" *ngIf="!userService.user">
+                <li class="nav-item" *ngIf="!userService.user.username">
                     <a href="/welcome" class="nav-link">Login</a>
                 </li>
             </ul>

@@ -80,21 +80,23 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
             },
             error: (error: any) => {
                 console.error(error);
-                movieSubscriber.unsubscribe
+                movieSubscriber.unsubscribe();
             }
         });
-        const favouritesSubscriber = this.userService.favourites.subscribe({
-            next: (favourites: Movie[] | null) => {
-                this.favouriteIds = [];
-                if (!favourites) return
-                for (const { _id } of favourites) this.favouriteIds.push(_id);
-                favouritesSubscriber.unsubscribe();
-            },
-            error: (error: any) => {
-                console.error(error);
-                favouritesSubscriber.unsubscribe();
-            }
-        });
+        if (this.user?.username) {
+            const favouritesSubscriber = this.userService.favourites.subscribe({
+                next: (favourites: Movie[] | null) => {
+                    this.favouriteIds = [];
+                    if (!favourites) return
+                    for (const { _id } of favourites) this.favouriteIds.push(_id);
+                    favouritesSubscriber.unsubscribe();
+                },
+                error: (error: any) => {
+                    console.error(error);
+                    favouritesSubscriber.unsubscribe();
+                }
+            });
+        }
     }
 
     ngAfterViewInit(): void {

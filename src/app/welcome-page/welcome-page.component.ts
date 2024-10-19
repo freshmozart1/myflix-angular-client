@@ -21,7 +21,7 @@ export class WelcomePageComponent {
         private router: Router,
         private userService: UserService
     ) {
-        if (this.userService.user) {
+        if (this.userService.user.username) {
             this.router.navigate(['/movies']);
         }
     }
