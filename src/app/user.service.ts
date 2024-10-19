@@ -8,12 +8,13 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 import { HttpErrorResponse } from '@angular/common/http';
 import { Movie } from './model/movie.model';
 import { Observable } from 'rxjs';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AsyncValidatorFn } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(private fetchApiData: FetchApiDataService) { }
 
   public set user(login: { username: string, password: string, dialog: MatDialogRef<LoginFormComponent | RegistrationFormComponent>, router: Router, snackBar?: MatSnackBar | undefined } | null) {
@@ -51,10 +52,12 @@ export class UserService {
     }
   }
 
-  public get user(): { username: string | null, token: string | null } | null {
-    const username = localStorage.getItem('username');
-    const token = localStorage.getItem('token');
-    return username && token ? { username, token } : null;
+  public get user(): { username: string, token: string } {
+    let username = localStorage.getItem('username');
+    username = username ? username : '';
+    let token = localStorage.getItem('token');
+    token = token ? token : '';
+    return { username, token };
   }
 
   public registrate(
@@ -88,17 +91,22 @@ export class UserService {
     });
   }
 
-  public patch(user: { username?: string, password?: string, email?: string, birthday?: string, favourites: string[] }): void {
-    const patchSubscriber = this.fetchApiData.patchUser(user).subscribe({
-      next: (result) => {
-        console.log('User updated successfully', result);
+  public patch(user: { username?: string, password?: string, email?: string, birthday?: string, favourites?: string[] }): Observable<any> {
+    const userObservable = this.fetchApiData.patchUser(user);
+    const patchSubscriber = userObservable.subscribe({
+      next: () => {
+        if (user.username) {
+          localStorage.setItem('username', user.username);
+        }
+        alert('User updated successfully');
         patchSubscriber.unsubscribe();
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Error updating user', error);
+        alert(`Error updating user: ${error.error}`,);
         patchSubscriber.unsubscribe();
       }
     });
+    return userObservable;
   }
 
   public get favourites(): Observable<Movie[] | null> {
@@ -112,4 +120,58 @@ export class UserService {
   public addFavourite(movieId: string): Observable<Movie[] | null> {
     return this.fetchApiData.addFavourite(movieId);
   }
+
+  public usernameExistsValidator(currentUsername: string): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+      return new Observable(observer => {
+        if (control.value === currentUsername) {
+          observer.next(null);
+          observer.complete();
+          return;
+        }
+        this.fetchApiData.getUser(control.value).subscribe({
+          next: () => {
+            observer.next({ usernameExists: true });
+            observer.complete();
+          },
+          error: (error: HttpErrorResponse) => {
+            if (error.status === 404) {
+              observer.next(null);
+            } else {
+              observer.next({ usernameExists: false });
+            }
+            observer.complete();
+          }
+        });
+      });
+    };
+  }
+
+  public passwordValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value.length < 8) {
+        return { passwordTooShort: true };
+      }
+      return null;
+    };
+  }
+
+  public emailValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (!control.value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$/)) {
+        return { invalidEmail: true };
+      }
+      return null;
+    };
+  }
+
+  public birthdayValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (!control.value.match(/^\d{2}.\d{2}.\d{4}$/)) {
+        return { invalidBirthday: true };
+      }
+      return null;
+    };
+  }
+
 }
