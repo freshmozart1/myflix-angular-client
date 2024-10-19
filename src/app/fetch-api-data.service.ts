@@ -33,7 +33,7 @@ export class FetchApiDataService {
         });
     }
 
-    public patchUser(userData: { username?: string, password?: string, email?: string, birthday?: string, favourites: string[] }): Observable<any> {
+    public patchUser(userData: { username?: string, password?: string, email?: string, birthday?: string, favourites?: string[] }): Observable<any> {
         const token = localStorage.getItem('token');
         const username = localStorage.getItem('username');
         return this.http.patch(`${environment.apiUrl}users/${username}`, userData, {
