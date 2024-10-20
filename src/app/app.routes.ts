@@ -1,3 +1,9 @@
+/**
+ * @constant routes
+ * @type {Routes}
+ * @default
+ */
+
 import { Routes } from '@angular/router';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';

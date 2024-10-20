@@ -1,3 +1,55 @@
+/**
+ * @class MovieCardComponent
+ * 
+ * @implements {OnInit}
+ * @implements {AfterViewInit}
+ * 
+ * @requires module:@angular/core
+ * @requires module:@angular/common
+ * @requires module:@angular/material/card
+ * @requires module:@angular/material/button
+ * @requires module:@angular/material/icon
+ * @requires module:@angular/material/dialog
+ * @requires module:@angular/ripple
+ * 
+ * @export MovieCardComponent
+ * 
+ * @description This component is responsible for displaying movie cards and managing user interactions with them.
+ * 
+ * @property {Movie[]} movies - List of movies to display.
+ * @property {string[]} favouriteIds - List of favourite movie IDs.
+ * @property {UserService['user']} user - Service to manage user data.
+ * 
+ * @constructor
+ * @param {FetchApiDataService} fetchApiData - Service to fetch data from the API.
+ * @param {ElementRef} el - Reference needed to add a ripple effect to the component's buttons.
+ * @param {MatDialog} dialog - Angular Material dialog to show movie, director, and genre details.
+ * @param {UserService} userService - Service to manage user data.
+ * 
+ * @method openDirectorDetailsDialog
+ * @description Opens the director details dialog.
+ * @param {Director} director - Director object to display.
+ * @returns {void}
+ * 
+ * @method openMovieDetailsDialog
+ * @description Opens the movie details dialog.
+ * @param {Movie} movie - Movie object to display.
+ * @returns {void}
+ * 
+ * @method toggleFavourite
+ * @description Toggles the favourite status of a movie.
+ * @param {string} movieId - ID of the movie to toggle favourite status.
+ * @returns {void}
+ * 
+ * @method ngOnInit
+ * @description Lifecycle hook that is called after data-bound properties of a directive are initialized.
+ * @returns {void}
+ * 
+ * @method ngAfterViewInit
+ * @description Lifecycle hook that is called after a component's view has been fully initialized.
+ * @returns {void}
+ */
+
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { NgForOf, AsyncPipe, NgIf } from '@angular/common';
 import { FetchApiDataService } from '../fetch-api-data.service';
@@ -29,10 +81,12 @@ import { UserService } from '../user.service';
     templateUrl: './movie-card.component.html',
     styleUrl: './movie-card.component.scss'
 })
+
 export class MovieCardComponent implements OnInit, AfterViewInit {
     protected movies: Movie[] = [];
     protected favouriteIds: string[] = [];
     protected user: UserService['user'] | null = null;
+
     constructor(
         protected fetchApiData: FetchApiDataService,
         private el: ElementRef,

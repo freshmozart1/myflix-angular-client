@@ -1,0 +1,19 @@
+{
+    "recurseDepth": 10,
+    "source": {
+        "include": [
+            "src"
+        ],
+        "includePattern": ".+\\.ts$",
+        "excludePattern": "(^|\\/|\\\\)_|\\.spec\\.ts$"
+    },
+    "plugins": [],
+    "opts": {
+        "destination": "./out"
+    },
+    "typescript": {
+        "module": "commonjs",
+        "target": "es6",
+        "allowSyntheticDefaultImports": true
+    }
+}

@@ -1,3 +1,98 @@
+/**
+ * @class FetchApiDataService
+ * 
+ * @requires module:@angular/core
+ * @requires module:@angular/common/http
+ * @requires module:rxjs
+ * @requires module:../environments/environment
+ * @requires module:./model/movie.model
+ * @requires module:./model/director.model
+ * @requires module:./model/genre.model
+ * 
+ * @export FetchApiDataService
+ * 
+ * @description This service is responsible for making HTTP requests to the API for user registration, login, and various CRUD operations related to movies, directors, and genres.
+ * 
+ * @constructor
+ * @param {HttpClient} http - Angular HttpClient to make HTTP requests.
+ * 
+ * @method userRegistration
+ * @description Registers a new user.
+ * @param {any} userDetails - The details of the user to register.
+ * @returns {Observable<any>} An observable containing the response from the API.
+ * 
+ * @method userLogin
+ * @description Logs in a user.
+ * @param {{ username: string, password: string }} userData - The username and password of the user.
+ * @returns {Observable<any>} An observable containing the response from the API.
+ * 
+ * @method deleteUser
+ * @description Deletes the current user.
+ * @returns {Observable<any>} An observable containing the response from the API.
+ * 
+ * @method patchUser
+ * @description Updates the current user's details.
+ * @param {{ username?: string, password?: string, email?: string, birthday?: string, favourites?: string[] }} userData - The new details of the user.
+ * @returns {Observable<any>} An observable containing the response from the API.
+ * 
+ * @method getUser
+ * @description Retrieves the details of a user.
+ * @param {string} username - The username of the user to retrieve.
+ * @returns {Observable<any>} An observable containing the user's details.
+ * 
+ * @method addFavourite
+ * @description Adds a movie to the user's list of favourites.
+ * @param {string} movieId - The ID of the movie to add.
+ * @returns {Observable<Movie[]>} An observable containing the updated list of favourite movies.
+ * 
+ * @method deleteFavourite
+ * @description Removes a movie from the user's list of favourites.
+ * @param {string} movieId - The ID of the movie to remove.
+ * @returns {Observable<Movie[] | null>} An observable containing the updated list of favourite movies or null if the list is empty.
+ * 
+ * @method get favourites
+ * @description Retrieves the user's list of favourite movies.
+ * @returns {Observable<Movie[] | null>} An observable containing the list of favourite movies or null if the list is empty.
+ * 
+ * @method get movies
+ * @description Retrieves the list of all movies.
+ * @returns {Observable<Movie[]>} An observable containing the list of movies.
+ * 
+ * @method getMovie
+ * @description Retrieves the details of a specific movie.
+ * @param {string} title - The title of the movie to retrieve.
+ * @returns {Observable<Movie>} An observable containing the movie's details.
+ * 
+ * @method postMovie
+ * @description Adds a new movie.
+ * @param {{ title: string, description: string, genre: object, director: object, image: string }} movie - The details of the movie to add.
+ * @returns {Observable<any>} An observable containing the response from the API.
+ * 
+ * @method getDirectors
+ * @description Retrieves the list of directors.
+ * @param {number} [limit] - Optional limit on the number of directors to retrieve.
+ * @returns {Observable<Director[]>} An observable containing the list of directors.
+ * 
+ * @method getDirector
+ * @description Retrieves the details of a specific director.
+ * @param {string} name - The name of the director to retrieve.
+ * @returns {Observable<Director>} An observable containing the director's details.
+ * 
+ * @method postDirector
+ * @description Adds a new director.
+ * @param {{ name: string, biography: string, birthday: string, deathday?: string }} director - The details of the director to add.
+ * @returns {Observable<any>} An observable containing the response from the API.
+ * 
+ * @method getGenres
+ * @description Retrieves the list of genres.
+ * @param {number} [limit] - Optional limit on the number of genres to retrieve.
+ * @returns {Observable<Genre[]>} An observable containing the list of genres.
+ * 
+ * @method getGenre
+ * @description Retrieves the details of a specific genre.
+ * @param {string} name - The name of the genre to retrieve.
+ * @returns {Observable<Genre>} An observable containing the genre's details.
+ */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';

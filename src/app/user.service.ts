@@ -11,9 +11,76 @@ import { Observable } from 'rxjs';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { AsyncValidatorFn } from '@angular/forms';
 
+/**
+ * @class UserService
+ * 
+ * @requires module:@angular/core
+ * @requires module:@angular/material/dialog
+ * @requires module:@angular/material/snack-bar
+ * @requires module:@angular/router
+ * @requires module:@angular/forms
+ * @requires module:rxjs
+ * @requires module:@angular/common/http
+ * 
+ * @export UserService
+ * 
+ * @description This service is responsible for managing user data, including login, registration, and user updates.
+ * 
+ * @constructor
+ * @param {FetchApiDataService} fetchApiData - Service to interact with the backend API.
+ * 
+ * @property {Object} user
+ * @description Getter and setter for the user object. The setter handles user login and logout, while the getter retrieves the user data from local storage.
+ * @returns {Object} The user object containing username and token.
+ * 
+ * @method registrate
+ * @description Registers a new user and logs them in upon successful registration.
+ * @param {Object} user - The user object containing username, password, email, and optional birthday.
+ * @param {MatDialogRef<RegistrationFormComponent>} dialog - Reference to the registration form dialog.
+ * @param {Router} router - Angular router to navigate to other pages.
+ * @param {MatSnackBar} [snackBar] - Optional Angular Material snack bar to show notifications.
+ * @returns {void}
+ * 
+ * @method patch
+ * @description Updates user data.
+ * @param {Object} user - The user object containing optional fields to update: username, password, email, birthday, and favourites.
+ * @returns {Observable<any>} An observable that emits the result of the update operation.
+ * 
+ * @method favourites
+ * @description Retrieves the user's favourite movies.
+ * @returns {Observable<Movie[] | null>} An observable that emits the list of favourite movies or null.
+ * 
+ * @method deleteFavourite
+ * @description Deletes a movie from the user's favourites.
+ * @param {string} movieId - The ID of the movie to delete from favourites.
+ * @returns {Observable<Movie[] | null>} An observable that emits the updated list of favourite movies or null.
+ * 
+ * @method addFavourite
+ * @description Adds a movie to the user's favourites.
+ * @param {string} movieId - The ID of the movie to add to favourites.
+ * @returns {Observable<Movie[] | null>} An observable that emits the updated list of favourite movies or null.
+ * 
+ * @method usernameExistsValidator
+ * @description Validator function to check if a username already exists.
+ * @param {string} currentUsername - The current username to compare against.
+ * @returns {AsyncValidatorFn} An asynchronous validator function.
+ * 
+ * @method passwordValidator
+ * @description Validator function to check if a password meets the minimum length requirement.
+ * @returns {ValidatorFn} A synchronous validator function.
+ * 
+ * @method emailValidator
+ * @description Validator function to check if an email address is valid.
+ * @returns {ValidatorFn} A synchronous validator function.
+ * 
+ * @method birthdayValidator
+ * @description Validator function to check if a birthday is in the correct format.
+ * @returns {ValidatorFn} A synchronous validator function.
+ */
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
   constructor(private fetchApiData: FetchApiDataService) { }
 

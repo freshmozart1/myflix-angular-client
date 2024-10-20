@@ -1,3 +1,41 @@
+/**
+ * @class ProfileComponent
+ * 
+ * @requires module:@angular/core
+ * @requires module:@angular/router
+ * @requires module:@angular/forms
+ * @requires module:@angular/material/form-field
+ * @requires module:@angular/material/input
+ * @requires module:@angular/common
+ * @requires module:@angular/material/button
+ * 
+ * @export ProfileComponent
+ * 
+ * @description This component is responsible for displaying and managing the user's profile information.
+ * 
+ * @constructor
+ * @param {UserService} userService - Service to manage user data.
+ * @param {Router} router - Angular router to navigate to other pages.
+ * 
+ * @property {any} user - The current user object.
+ * @property {FormControl<string | null>} username - Form control for the username.
+ * @property {FormControl<string | null>} password - Form control for the password.
+ * @property {FormControl<string | null>} email - Form control for the email.
+ * @property {FormControl<string | null>} birthday - Form control for the birthday.
+ * 
+ * @method disableSubmit
+ * @description Determines if the submit button should be disabled based on the form controls' states.
+ * @returns {boolean} - True if the submit button should be disabled, false otherwise.
+ * 
+ * @method submit
+ * @description Submits the form data to update the user's profile.
+ * @returns {void}
+ * 
+ * @method ngOnInit
+ * @description Initializes the form controls with the user's current data and sets up validators.
+ * @returns {void}
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
@@ -6,6 +44,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
     selector: 'app-profile',

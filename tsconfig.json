@@ -32,6 +32,14 @@
             "angular"
         ],
     },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "src/**/*.spec.ts",
+        "src/**/*.d.ts"
+    ],
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
         "strictInjectionParameters": true,
