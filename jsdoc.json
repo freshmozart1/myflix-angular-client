@@ -7,9 +7,17 @@
         "includePattern": ".+\\.ts$",
         "excludePattern": "(^|\\/|\\\\)_|\\.spec\\.ts$"
     },
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": [
+            "jsdoc",
+            "closure"
+        ]
+    },
     "plugins": [],
     "opts": {
-        "destination": "./out"
+        "destination": "./out",
+        "recurse": true
     },
     "typescript": {
         "module": "commonjs",
