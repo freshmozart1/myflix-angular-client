@@ -14,7 +14,10 @@
             "closure"
         ]
     },
-    "plugins": [],
+    "plugins": [
+        "plugins/markdown",
+        "node_modules/jsdoc-plugin-typescript"
+    ],
     "opts": {
         "destination": "./out",
         "recurse": true
