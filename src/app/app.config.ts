@@ -1,10 +1,30 @@
+/**
+ * @module app
+ * @hidden
+ */
+
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
+import { provideRouter, Routes } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { MovieCardComponent } from './movie-card/movie-card.component';
+import { ProfileComponent } from './profile/profile.component';
 
+const routes: Routes = [
+    {
+        path: 'welcome', component: WelcomePageComponent
+    },
+    {
+        path: 'movies', component: MovieCardComponent
+    },
+    {
+        path: 'profile', component: ProfileComponent
+    },
+    {
+        path: '', redirectTo: '/welcome', pathMatch: 'prefix'
+    }
+];
 export const appConfig: ApplicationConfig = {
     providers: [
         provideZoneChangeDetection({ eventCoalescing: true }),

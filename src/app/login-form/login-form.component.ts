@@ -10,35 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../user.service';
 
 /**
- * @class LoginFormComponent
- * 
- * @requires module:@angular/core
- * @requires module:@angular/material/snack-bar
- * @requires module:@angular/material/dialog
- * @requires module:@angular/router
- * @requires module:@angular/forms
- * @requires module:@angular/material/card
- * @requires module:@angular/material/form-field
- * @requires module:@angular/material/button
- * @requires module:@angular/material/input
- * 
- * @export LoginFormComponent
- * 
- * @description This component is responsible for handling the user login form and managing user authentication.
- * 
- * @constructor
- * @param {MatDialogRef<LoginFormComponent>} dialogRef - Reference to the dialog containing this component.
- * @param {Router} router - Angular router to navigate to other pages.
- * @param {UserService} userService - Service to manage user data.
- * 
- * @property {MatSnackBar} _snackBar - Angular Material snack bar for displaying notifications.
- * @property {Object} userData - Object containing user credentials.
- * @property {string} userData.username - The username entered by the user.
- * @property {string} userData.password - The password entered by the user.
- * 
- * @method loginUser
- * @description Authenticates the user with the provided credentials and updates the user service.
- * @returns {void}
+ * This component is responsible for handling the user login form and managing user authentication.
  */
 @Component({
     selector: 'app-login-form',
@@ -55,17 +27,36 @@ import { UserService } from '../user.service';
 })
 export class LoginFormComponent {
 
+    /**
+     * Angular Material snack bar for displaying login notifications.
+     * @private
+     */
     private _snackBar = inject(MatSnackBar);
 
+    /**
+     * Object containing user credentials.
+     * @protected
+     */
     @Input({ required: true })
-    userData = { username: '', password: '' };
+    protected userData = { username: '', password: '' };
 
+    /**
+     * 
+     * @param dialogRef Reference to the dialog containing this component.
+     * @param router Angular router to navigate to other pages.
+     * @param userService Service to manage user data.
+     */
     constructor(
-        public dialogRef: MatDialogRef<LoginFormComponent>,
-        public router: Router,
+        private dialogRef: MatDialogRef<LoginFormComponent>,
+        private router: Router,
         private userService: UserService
     ) { }
 
+    /**
+     * Authenticates the user with the provided credentials and updates the user service.
+     * @protected
+     * @returns {void}
+     */
     protected loginUser(): void {
         this.userService.user = {
             username: this.userData.username,
