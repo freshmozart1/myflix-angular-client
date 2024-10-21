@@ -1,0 +1,30 @@
+{
+    "recurseDepth": 10,
+    "source": {
+        "include": [
+            "src"
+        ],
+        "includePattern": ".+\\.ts$",
+        "excludePattern": "(^|\\/|\\\\)_|\\.spec\\.ts$"
+    },
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": [
+            "jsdoc",
+            "closure"
+        ]
+    },
+    "plugins": [
+        "plugins/markdown",
+        "node_modules/jsdoc-plugin-typescript"
+    ],
+    "opts": {
+        "destination": "./out",
+        "recurse": true
+    },
+    "typescript": {
+        "module": "commonjs",
+        "target": "es6",
+        "allowSyntheticDefaultImports": true
+    }
+}

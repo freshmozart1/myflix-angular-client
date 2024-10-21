@@ -1,13 +1,22 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { environment } from '../environments/environment';
-
+/**
+ * This pipe is responsible for transforming image paths into AWS S3 URLs for thumbnails and posters.
+ * @hideconstructor
+ */
 @Pipe({
   name: 'awsImages',
   standalone: true
 })
 export class AwsImagesPipe implements PipeTransform {
 
+  /**
+   * 
+   * @param imagePath The path of the image in the S3 bucket.
+   * @param imageType The type of the image
+   * @returns {Promise<string>} A promise that resolves to the URL of the image.
+   */
   async transform(imagePath: string, imageType: 'thumbnail' | 'poster'): Promise<string> {
     try {
       const s3 = new S3Client({

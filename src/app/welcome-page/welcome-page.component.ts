@@ -6,6 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
+/**
+ * This component is the welcome page of the application.
+ */
 @Component({
     selector: 'app-welcome-page',
     standalone: true,
@@ -16,8 +19,13 @@ import { UserService } from '../user.service';
     styleUrl: './welcome-page.component.scss'
 })
 export class WelcomePageComponent {
+    /**
+     * @param dialog Service to open registration or login dialog
+     * @param router Service to navigate to other pages
+     * @param userService Service to manage user data
+     */
     constructor(
-        protected dialog: MatDialog,
+        private dialog: MatDialog,
         private router: Router,
         private userService: UserService
     ) {
@@ -26,11 +34,21 @@ export class WelcomePageComponent {
         }
     }
 
-    openUserRegistrationDialog(): void {
+    /**
+     * @protected
+     * Opens the user registration dialog.
+     * @returns {void}
+     */
+    protected openUserRegistrationDialog(): void {
         this.dialog.open(RegistrationForm, { width: '280px' });
     }
 
-    openUserLoginDialog(): void {
+    /**
+     * @protected
+     * Opens the user login dialog.
+     * @returns {void}
+     */
+    protected openUserLoginDialog(): void {
         this.dialog.open(LoginForm, { width: '280px' });
     }
 }

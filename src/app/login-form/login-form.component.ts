@@ -9,6 +9,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../user.service';
 
+/**
+ * This component is responsible for handling the user login form and managing user authentication.
+ */
 @Component({
     selector: 'app-login-form',
     standalone: true,
@@ -24,17 +27,36 @@ import { UserService } from '../user.service';
 })
 export class LoginFormComponent {
 
+    /**
+     * Angular Material snack bar for displaying login notifications.
+     * @private
+     */
     private _snackBar = inject(MatSnackBar);
 
+    /**
+     * Object containing user credentials.
+     * @protected
+     */
     @Input({ required: true })
-    userData = { username: '', password: '' };
+    protected userData = { username: '', password: '' };
 
+    /**
+     * 
+     * @param dialogRef Reference to the dialog containing this component.
+     * @param router Angular router to navigate to other pages.
+     * @param userService Service to manage user data.
+     */
     constructor(
-        public dialogRef: MatDialogRef<LoginFormComponent>,
-        public router: Router,
+        private dialogRef: MatDialogRef<LoginFormComponent>,
+        private router: Router,
         private userService: UserService
     ) { }
 
+    /**
+     * Authenticates the user with the provided credentials and updates the user service.
+     * @protected
+     * @returns {void}
+     */
     protected loginUser(): void {
         this.userService.user = {
             username: this.userData.username,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
@@ -9,6 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 
+/**
+ * This component is responsible for handling user registration.
+ */
 @Component({
     selector: 'app-user-registration-form',
     standalone: true,
@@ -22,22 +25,37 @@ import { Router } from '@angular/router';
     templateUrl: './registration-form.component.html',
     styleUrl: './registration-form.component.scss'
 })
-export class RegistrationFormComponent implements OnInit {
+export class RegistrationFormComponent {
 
+    /**
+     * @private
+     * This object contains the snack bar service.
+     */
     private _snackBar = inject(MatSnackBar);
 
+    /**
+     * @protected
+     * This object contains the user data from the registration form.
+     */
     @Input({ required: true })
-    userData = { username: '', password: '', email: '', birthday: undefined };
+    protected userData = { username: '', password: '', email: '', birthday: undefined };
 
+    /**
+     * @param dialogRef Reference to the dialog containing this component.
+     * @param userService This service manages user data.
+     * @param router This service navigates to other pages.
+     */
     constructor(
-        public dialogRef: MatDialogRef<RegistrationFormComponent>,
+        private dialogRef: MatDialogRef<RegistrationFormComponent>,
         private userService: UserService,
         private router: Router
     ) { }
 
-    ngOnInit(): void {
-    }
-
+    /**
+     * @protected
+     * Registers a new user using the user service and provides feedback via a snack bar.
+     * @returns {void}
+     */
     protected registerUser(): void {
         this.userService.registrate(this.userData, this.dialogRef, this.router, this._snackBar);
     }
