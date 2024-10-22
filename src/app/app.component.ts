@@ -1,7 +1,8 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { UserService } from './user.service';
+
 
 /**
  * This component is responsible for managing the main view of the application.
@@ -11,6 +12,7 @@ import { UserService } from './user.service';
     standalone: true,
     imports: [
         RouterOutlet,
+        RouterLink,
         NgIf
     ],
     templateUrl: './app.component.html',
