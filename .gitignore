@@ -43,3 +43,4 @@ Thumbs.db
 
 # Custom files
 src/environments/*.ts
+!src/environments/environment.ts
