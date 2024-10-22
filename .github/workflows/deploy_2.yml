@@ -41,4 +41,4 @@ jobs:
           S3_REGION: ${{ vars.S3_REGION }}
           AWS_ID: ${{ secrets.AWS_ID }}
           AWS_SECRET: ${{ secrets.AWS_SECRET }}
-        run: npm run build
+        run: npm run deploy
