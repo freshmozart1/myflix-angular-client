@@ -22,7 +22,7 @@ const routes: Routes = [
         path: 'profile', component: ProfileComponent
     },
     {
-        path: '', redirectTo: '/welcome', pathMatch: 'prefix'
+        path: '', redirectTo: '/welcome', pathMatch: 'full'
     }
 ];
 export const appConfig: ApplicationConfig = {
