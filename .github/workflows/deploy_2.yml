@@ -30,6 +30,11 @@ jobs:
         with:
           node-version: '22.9.0'
 
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
       # Runs a single command using the runners shell
       - name: Install deps
         run: npm install
