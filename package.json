@@ -8,7 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:prod": "npm run config && ng build --configuration production --base-href=/my-flix-angular-client/"
+    "build:prod": "npm run config && ng build --configuration production --base-href=/myflix-angular-client/"
   },
   "private": true,
   "dependencies": {

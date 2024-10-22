@@ -47,7 +47,7 @@ jobs:
           S3_REGION: ${{ vars.S3_REGION }}
           AWS_ID: ${{ secrets.AWS_ID }}
           AWS_SECRET: ${{ secrets.AWS_SECRET }}
-        run: npm run build:prod --prod --base-href "/"
+        run: npm run build:prod --prod
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
