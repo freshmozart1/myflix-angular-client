@@ -1,6 +1,14 @@
 import { writeFile } from "fs";
 
 const targetPath = "./src/environments/environment.ts";
+console.log('==================================');
+console.log('Generating environment.ts file with the following environment variables:');
+console.log('API_URL:', process.env['API_URL']);
+console.log('S3_BUCKET:', process.env['S3_BUCKET']);
+console.log('S3_REGION:', process.env['S3_REGION']);
+console.log('AWS_ID:', process.env['AWS_ID']);
+console.log('AWS_SECRET:', process.env['AWS_SECRET']);
+console.log('==================================');
 
 const envConfigFile = `export const environment = {
     apiUrl: '${process.env['API_URL']}',
