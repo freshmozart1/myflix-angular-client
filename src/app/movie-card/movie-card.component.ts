@@ -114,7 +114,7 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
                 movieSubscriber.unsubscribe();
             },
             error: (error: any) => {
-                console.error(error);
+                console.error('Can not fetch movies', error);
                 movieSubscriber.unsubscribe();
             }
         });
