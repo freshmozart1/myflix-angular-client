@@ -1,6 +1,6 @@
 <div class="navbar navbar-expand-lg bg-body-tertiary mb-4">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">myFlix</a>
+        <a class="navbar-brand" [routerLink]="''">myFlix</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -11,13 +11,13 @@
                     <a class="nav-link" [routerLink]="'movies'">Movies</a>
                 </li>
                 <li class="nav-item" *ngIf="userService.user.username">
-                    <a href="/profile" class="nav-link">{{userService.user.username}}</a>
+                    <a [routerLink]="'profile'" class="nav-link">{{userService.user.username}}</a>
                 </li>
                 <li class="nav-item" *ngIf="userService.user.username">
                     <a (click)="logout()" class="nav-link" style="cursor: pointer;">Logout</a>
                 </li>
                 <li class="nav-item" *ngIf="!userService.user.username">
-                    <a href="/welcome" class="nav-link">Login</a>
+                    <a [routerLink]="'login'" class="nav-link">Login</a>
                 </li>
             </ul>
         </div>
