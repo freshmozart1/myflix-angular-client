@@ -52,7 +52,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/my-flix-angular-client
+          path: ./dist/my-flix-angular-client/browser
 
   Deploy:
     runs-on: ubuntu-latest
