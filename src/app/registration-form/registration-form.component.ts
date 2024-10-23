@@ -9,9 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 
-/**
- * This component is responsible for handling user registration.
- */
 @Component({
     selector: 'app-user-registration-form',
     standalone: true,
@@ -41,6 +38,7 @@ export class RegistrationFormComponent {
     protected userData = { username: '', password: '', email: '', birthday: undefined };
 
     /**
+     * This component is responsible for handling user registration.
      * @param dialogRef Reference to the dialog containing this component.
      * @param userService This service manages user data.
      * @param router This service navigates to other pages.

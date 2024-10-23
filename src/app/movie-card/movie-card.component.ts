@@ -13,9 +13,7 @@ import { Observable } from 'rxjs';
 import { DirectorViewComponent } from '../director-view/director-view.component';
 import { Director } from '../model/director.model';
 import { UserService } from '../user.service';
-/**
- * This component is responsible for displaying movie cards and managing user interactions with them.
- */
+
 @Component({
     selector: 'app-movie-card',
     standalone: true,
@@ -43,11 +41,12 @@ export class MovieCardComponent implements OnInit, AfterViewInit {
     protected favouriteIds: string[] = [];
     /**
      * Object that represents the current user.
+     * @type {{username: string, tokem: string}|null}
      */
-    protected user: UserService['user'] | null = null;
+    protected user: { username: string, token: string } | null = null;
 
     /**
-     * 
+     * This component is responsible for displaying movie cards and managing user interactions with them.
      * @param fetchApiData Service to fetch data from the API.
      * @param el Reference needed to add a ripple effect to the component's buttons.
      * @param dialog Serice for opening dialogs to display movie, director, and genre details.

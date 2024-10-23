@@ -6,16 +6,13 @@ import { Movie } from './model/movie.model';
 import { Director } from './model/director.model';
 import { Genre } from './model/genre.model';
 
-/**
- * This service contains methods to make HTTP requests to the API.
- */
-
 @Injectable({
     providedIn: 'root'
 })
 export class FetchApiDataService {
 
     /**
+     * This service contains methods to make HTTP requests to the API.
      * @param http Angular HttpClient to make HTTP requests.
      */
     constructor(
@@ -79,7 +76,7 @@ export class FetchApiDataService {
     /**
      * Retrieves the details of a user.
      * @param username The username of the user to retrieve.
-     * @returns 
+     * @returns {Observable<any>}
      */
     public getUser(username: string): Observable<any> {
         return this.http.get(`${environment.apiUrl}users/${username}`);

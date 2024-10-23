@@ -1,0 +1,22 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": [
+        "./src/main.ts"
+    ],
+    "entryPointStrategy": "expand",
+    "exclude": [
+        "./src/environments/*",
+        "**/*.spec.ts"
+    ],
+    "excludeProtected": false,
+    "excludeNotDocumented": false,
+    "visibilityFilters": {
+        "protected": true,
+        "private": false,
+        "inherited": true,
+        "external": false,
+        "@alpha": false,
+        "@beta": false
+    },
+    "out": "./docs/typedoc"
+}

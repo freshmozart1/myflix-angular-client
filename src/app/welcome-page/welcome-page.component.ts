@@ -6,9 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
-/**
- * This component is the welcome page of the application.
- */
 @Component({
     selector: 'app-welcome-page',
     standalone: true,
@@ -20,6 +17,7 @@ import { UserService } from '../user.service';
 })
 export class WelcomePageComponent {
     /**
+     * This component is the welcome page of the application.
      * @param dialog Service to open registration or login dialog
      * @param router Service to navigate to other pages
      * @param userService Service to manage user data

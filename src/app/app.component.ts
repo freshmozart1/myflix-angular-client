@@ -3,10 +3,6 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { UserService } from './user.service';
 
-
-/**
- * This component is responsible for managing the main view of the application.
- */
 @Component({
     selector: 'app-root',
     standalone: true,
@@ -21,6 +17,7 @@ import { UserService } from './user.service';
 
 export class AppComponent {
     /**
+     * This component is responsible for managing the main view of the application.
      * @param userService Service to manage user data.
      */
     constructor(

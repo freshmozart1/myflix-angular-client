@@ -7,9 +7,6 @@ import { MatInputModule } from '@angular/material/input';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
-/**
- * This component is responsible for displaying and managing the user's profile information.
- */
 @Component({
     selector: 'app-profile',
     standalone: true,
@@ -47,6 +44,7 @@ export class ProfileComponent implements OnInit {
     protected birthday!: FormControl<string | null>;
 
     /**
+     * This component is responsible for displaying and managing the user's profile information.
      * @param userService This service manages user data.
      * @param router This service navigates to other pages.
      */

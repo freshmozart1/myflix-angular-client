@@ -15,16 +15,10 @@
         ]
     },
     "plugins": [
-        "plugins/markdown",
-        "node_modules/jsdoc-plugin-typescript"
+        "node_modules/better-docs/typescript"
     ],
     "opts": {
-        "destination": "./out",
+        "destination": "./docs/jsdoc",
         "recurse": true
-    },
-    "typescript": {
-        "module": "commonjs",
-        "target": "es6",
-        "allowSyntheticDefaultImports": true
     }
 }

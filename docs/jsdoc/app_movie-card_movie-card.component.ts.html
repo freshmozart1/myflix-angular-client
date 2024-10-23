@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/movie-card/movie-card.component.ts</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/movie-card/movie-card.component.ts</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { NgForOf, AsyncPipe, NgIf } from '@angular/common';
+import { FetchApiDataService } from '../fetch-api-data.service';
+import { MatCardModule } from '@angular/material/card';
+import { Movie } from '../model/movie.model';
+import { MatButtonModule } from '@angular/material/button';
+import { MDCRipple } from '@material/ripple';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { MovieViewComponent } from '../movie-view/movie-view.component';
+import { AwsImagesPipe } from '../aws-images.pipe';
+import { Observable } from 'rxjs';
+import { DirectorViewComponent } from '../director-view/director-view.component';
+import { Director } from '../model/director.model';
+import { UserService } from '../user.service';
+
+@Component({
+    selector: 'app-movie-card',
+    standalone: true,
+    imports: [
+        MatCardModule,
+        NgForOf,
+        AsyncPipe,
+        MatButtonModule,
+        MatIconModule,
+        AwsImagesPipe,
+        NgIf
+    ],
+    templateUrl: './movie-card.component.html',
+    styleUrl: './movie-card.component.scss'
+})
+
+export class MovieCardComponent implements OnInit, AfterViewInit {
+    /**
+     * List of movies to display.
+     */
+    protected movies: Movie[] = [];
+    /**
+     * List of favourite movie IDs.
+     */
+    protected favouriteIds: string[] = [];
+    /**
+     * Object that represents the current user.
+     * @type {{username: string, tokem: string}|null}
+     */
+    protected user: { username: string, token: string } | null = null;
+
+    /**
+     * This component is responsible for displaying movie cards and managing user interactions with them.
+     * @param fetchApiData Service to fetch data from the API.
+     * @param el Reference needed to add a ripple effect to the component's buttons.
+     * @param dialog Serice for opening dialogs to display movie, director, and genre details.
+     * @param userService Service to manage user data.
+     */
+    constructor(
+        protected fetchApiData: FetchApiDataService,
+        private el: ElementRef,
+        protected dialog: MatDialog,
+        protected userService: UserService
+    ) {
+        this.user = this.userService.user;
+    }
+
+    /**
+     * This function opens the director details dialog.
+     * @param director Director object to display.
+     */
+    protected openDirectorDetailsDialog(director: Director): void {
+        this.dialog.open(DirectorViewComponent, {
+            data: { director },
+            autoFocus: '#closeButton'
+        });
+    }
+
+    /**
+     * This function opens the movie details dialog.
+     * @param movie Movie object to display.
+     */
+    protected openMovieDetailsDialog(movie: Movie): void {
+        this.dialog.open(MovieViewComponent, {
+            data: { movie },
+            autoFocus: '#closeButton'
+        });
+    }
+
+    /**
+     * Toggles the favourite status of a movie for the current user.
+     * @param movieId ID of the movie to toggle favourite status.
+     */
+    protected toggleFavourite(movieId: string): void {
+        ((favouriteObserver: Observable&lt;Movie[] | null>) => {
+            favouriteObserver.subscribe({
+                next: (response) => {
+                    if (response) {
+                        this.favouriteIds = [];
+                        for (const { _id } of response) this.favouriteIds.push(_id);
+                    }
+                },
+                error: (error: any) => {
+                    console.error(error);
+                }
+            });
+        })(this.favouriteIds.includes(movieId) ? this.userService.deleteFavourite(movieId) : this.userService.addFavourite(movieId));
+    }
+
+    /**
+     * This function subscribes to the movies and favourites observables to get the data needed for the component.
+     */
+    ngOnInit(): void {
+        const movieSubscriber = this.fetchApiData.movies.subscribe({
+            next: (movies: Movie[]) => {
+                this.movies = movies;
+                movieSubscriber.unsubscribe();
+            },
+            error: (error: any) => {
+                console.error('Can not fetch movies', error);
+                movieSubscriber.unsubscribe();
+            }
+        });
+        if (this.user?.username) {
+            const favouritesSubscriber = this.userService.favourites.subscribe({
+                next: (favourites: Movie[] | null) => {
+                    this.favouriteIds = [];
+                    if (!favourites) return
+                    for (const { _id } of favourites) this.favouriteIds.push(_id);
+                    favouritesSubscriber.unsubscribe();
+                },
+                error: (error: any) => {
+                    console.error(error);
+                    favouritesSubscriber.unsubscribe();
+                }
+            });
+        }
+    }
+
+    /**
+     * This function adds a ripple effect to the component's buttons.
+     * @experimental
+     */
+    ngAfterViewInit(): void {
+        for (let button of this.el.nativeElement.querySelectorAll('button')) {
+            new MDCRipple(button);
+        }
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Classes</h3><ul><li><a href="AppComponent.html">AppComponent</a></li><li><a href="AwsImagesPipe.html">AwsImagesPipe</a></li><li><a href="DirectorViewComponent.html">DirectorViewComponent</a></li><li><a href="FetchApiDataService.html">FetchApiDataService</a></li><li><a href="GenreViewComponent.html">GenreViewComponent</a></li><li><a href="LoginFormComponent.html">LoginFormComponent</a></li><li><a href="MovieCardComponent.html">MovieCardComponent</a></li><li><a href="MovieViewComponent.html">MovieViewComponent</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegistrationFormComponent.html">RegistrationFormComponent</a></li><li><a href="UserService.html">UserService</a></li><li><a href="WelcomePageComponent.html">WelcomePageComponent</a></li></ul><h3>Interfaces</h3><ul><li><a href="Director.html">Director</a></li><li><a href="Genre.html">Genre</a></li><li><a href="Movie.html">Movie</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Oct 23 2024 10:38:15 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

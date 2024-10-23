@@ -6,9 +6,7 @@ import { AwsImagesPipe } from '../aws-images.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { DirectorViewComponent } from '../director-view/director-view.component';
 import { GenreViewComponent } from '../genre-view/genre-view.component';
-/**
- * This component is responsible for displaying a movie dialog.
- */
+
 @Component({
     selector: 'app-movie-view',
     standalone: true,
@@ -29,6 +27,7 @@ export class MovieViewComponent {
     protected movie: Movie = inject(MAT_DIALOG_DATA).movie as Movie;
 
     /**
+     * This component is responsible for displaying a movie dialog.
      * @param dialog Service for opening the director and genre dialogs.
      */
     constructor(private dialog: MatDialog) { }

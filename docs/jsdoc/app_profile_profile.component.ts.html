@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/profile/profile.component.ts</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/profile/profile.component.ts</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+
+@Component({
+    selector: 'app-profile',
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        NgIf,
+        AsyncPipe
+    ],
+    templateUrl: './profile.component.html',
+    styleUrl: './profile.component.scss'
+})
+export class ProfileComponent implements OnInit {
+    /**
+     * The current user object.
+     */
+    protected user;
+    /**
+     * Form control for the username.
+     */
+    protected username!: FormControl&lt;string | null>;
+    /**
+     * Form control for the password.
+     */
+    protected password!: FormControl&lt;string | null>;
+    /**
+     * Form control for the email.
+     */
+    protected email!: FormControl&lt;string | null>;
+    /**
+     * Form control for the birthday.
+     */
+    protected birthday!: FormControl&lt;string | null>;
+
+    /**
+     * This component is responsible for displaying and managing the user's profile information.
+     * @param userService This service manages user data.
+     * @param router This service navigates to other pages.
+     */
+    constructor(private userService: UserService, private router: Router) {
+        this.user = this.userService.user;
+        if (!this.user || !this.user.username) {
+            this.router.navigate(['/welcome']);
+            return;
+        }
+    }
+
+    /**
+     * Function to determine if the submit button of the profile form should be disabled based on the form controls' states.
+     * @returns {boolean} True if the submit button should be disabled, false otherwise.
+     */
+    protected disableSubmit(): boolean {
+        return [this.username, this.email, this.password, this.birthday].every(control => control.pristine) ||
+            [this.username, this.email, this.password, this.birthday].some(control => control.dirty &amp;&amp; control.invalid);
+    }
+
+    /**
+     * Function to submit the form data to update the user's profile.
+     * @returns {void}
+     */
+    protected submit(): void {
+        let controls = [{ name: 'username', control: this.username }, { name: 'email', control: this.email }, { name: 'password', control: this.password }, { name: 'birthday', control: this.birthday }];
+        if (controls.some(({ control }) => control.dirty &amp;&amp; control.invalid)) {
+            return;
+        }
+        controls = controls.filter(({ control }) => control.dirty);
+        const submitObject = controls.reduce((acc: { [key: string]: any }, { name, control }) => {
+            acc[name] = control.value;
+            return acc;
+        }, {});
+        this.userService.patch(submitObject).subscribe({
+            next: () => {
+                window.location.reload();
+            }
+        });
+    }
+
+    /**
+     * Function to initialize the form controls with the user's current data and set up validators.
+     */
+    ngOnInit(): void {
+        this.username = new FormControl&lt;string | null>(this.user.username);
+        this.username.addAsyncValidators([this.userService.usernameExistsValidator(this.user.username)]);
+        this.email = new FormControl&lt;string | null>('');
+        this.email.addValidators([this.userService.emailValidator()]);
+        this.password = new FormControl('');
+        this.password.addValidators([this.userService.passwordValidator()]);
+        this.birthday = new FormControl('');
+        this.birthday.addValidators([this.userService.birthdayValidator()]);
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Classes</h3><ul><li><a href="AppComponent.html">AppComponent</a></li><li><a href="AwsImagesPipe.html">AwsImagesPipe</a></li><li><a href="DirectorViewComponent.html">DirectorViewComponent</a></li><li><a href="FetchApiDataService.html">FetchApiDataService</a></li><li><a href="GenreViewComponent.html">GenreViewComponent</a></li><li><a href="LoginFormComponent.html">LoginFormComponent</a></li><li><a href="MovieCardComponent.html">MovieCardComponent</a></li><li><a href="MovieViewComponent.html">MovieViewComponent</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegistrationFormComponent.html">RegistrationFormComponent</a></li><li><a href="UserService.html">UserService</a></li><li><a href="WelcomePageComponent.html">WelcomePageComponent</a></li></ul><h3>Interfaces</h3><ul><li><a href="Director.html">Director</a></li><li><a href="Genre.html">Genre</a></li><li><a href="Movie.html">Movie</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Oct 23 2024 10:38:15 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

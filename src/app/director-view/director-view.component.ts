@@ -23,8 +23,8 @@ import { DatePipe, NgClass, NgIf } from '@angular/common';
 })
 export class DirectorViewComponent {
     /**
-     * @protected
      * This object contains the director data to be displayed.
+     * @protected
      */
     protected director: Director = inject(MAT_DIALOG_DATA).director as Director;
 }

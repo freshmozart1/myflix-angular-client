@@ -5,7 +5,6 @@ import { Genre } from '../model/genre.model';
 
 /**
  * This component is responsible for displaying a genre dialog.
- * @hideconstructor
  */
 @Component({
   selector: 'app-genre-view',

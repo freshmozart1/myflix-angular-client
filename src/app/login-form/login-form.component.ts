@@ -9,9 +9,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../user.service';
 
-/**
- * This component is responsible for handling the user login form and managing user authentication.
- */
 @Component({
     selector: 'app-login-form',
     standalone: true,
@@ -41,7 +38,7 @@ export class LoginFormComponent {
     protected userData = { username: '', password: '' };
 
     /**
-     * 
+     * This component is responsible for handling the user login form and managing user authentication.
      * @param dialogRef Reference to the dialog containing this component.
      * @param router Angular router to navigate to other pages.
      * @param userService Service to manage user data.
