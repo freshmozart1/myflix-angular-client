@@ -9,5 +9,5 @@ This application is a client application for my Movie database. With the app it 
 - Bootstrap: For the Layout
 - GitHub Workflow: For continous integration
 
-## Atention
+## Attention
 Please notice that it is not possible to use this code by cloning the repository and hosting it on localhost.
